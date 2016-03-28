@@ -1,18 +1,24 @@
 package com.comvaca.dagger2x.activity;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.comvaca.dagger2x.R;
+import com.comvaca.dagger2x.models.Repository;
+import com.comvaca.dagger2x.network.GithubApi;
 
-import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity {
 
   private TextView tvTest;
+
+  private GithubApi githubApi;
+
+  private final String user = "toantruonggithub";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -21,24 +27,26 @@ public class MainActivity extends BaseActivity {
 
     tvTest = (TextView) findViewById(R.id.tv_text);
 
-    new AsyncTask<String, Void, String>() {
+    githubApi = new GithubApi(retrofit);
+
+    githubApi.getRepos(user, new GithubApi.ResponseHandler() {
       @Override
-      protected String doInBackground(String... params) {
-        String s = null;
-        try {
-          s = getAPI(params[0]);
-        } catch (IOException e) {
-          e.printStackTrace();
+      public void onResponse(Object data) {
+        Toast.makeText(context, "Result OK", Toast.LENGTH_SHORT).show();
+        ArrayList<Repository> repositories = (ArrayList<Repository>) data;
+        for (Repository repository : repositories) {
+          tvTest.append("\n" + repository.getName());
+          tvTest.append("\n" + repository.getFullName());
+          tvTest.append("\n" + repository.getDescription());
+          tvTest.append("\n------------------------\n");
         }
-        return s;
       }
 
       @Override
-      protected void onPostExecute(String s) {
-        super.onPostExecute(s);
-        tvTest.setText(s);
+      public void onFailure() {
+        Toast.makeText(context, "Result Failed", Toast.LENGTH_SHORT).show();
       }
-    }.execute("http://square.github.io/okhttp/");
+    });
   }
 
   @Override

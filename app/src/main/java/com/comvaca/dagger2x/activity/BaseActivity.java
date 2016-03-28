@@ -1,5 +1,6 @@
 package com.comvaca.dagger2x.activity;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,24 +17,28 @@ import java.io.IOException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import retrofit.Retrofit;
+
 public class BaseActivity extends AppCompatActivity {
+
+  protected final Context context = this;
 
   public static final MediaType JSON
       = MediaType.parse("application/json; charset=utf-8");
 
-  @Inject @Named("cached")
+  @Inject
   OkHttpClient mOkHttpClient1;
-
-  @Inject @Named("non-cached")
-  OkHttpClient mOkHttpClient2;
 
   @Inject
   SharedPreferences sharedPreferences;
 
+  @Inject
+  Retrofit retrofit;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    ((MyApplication) getApplication()).getNetComponent().inject(this);
+    ((MyApplication) getApplication()).getGithubComponent().inject(this);
   }
 
   String postAPI(String url, String json) throws IOException {
