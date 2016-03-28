@@ -1,6 +1,8 @@
-package com.comvaca.dagger2x.dagger;
+package com.comvaca.dagger2x.dagger.components;
 
 import com.comvaca.dagger2x.activity.BaseActivity;
+import com.comvaca.dagger2x.dagger.modules.AppModule;
+import com.comvaca.dagger2x.dagger.modules.NetModule;
 
 import javax.inject.Singleton;
 

@@ -1,4 +1,4 @@
-package com.comvaca.dagger2x.dagger;
+package com.comvaca.dagger2x.dagger.modules;
 
 import android.app.Application;
 import android.content.SharedPreferences;

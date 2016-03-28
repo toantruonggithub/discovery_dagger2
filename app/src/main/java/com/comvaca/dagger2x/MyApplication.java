@@ -2,10 +2,11 @@ package com.comvaca.dagger2x;
 
 import android.app.Application;
 
-import com.comvaca.dagger2x.dagger.AppModule;
-import com.comvaca.dagger2x.dagger.DaggerNetComponent;
-import com.comvaca.dagger2x.dagger.NetComponent;
-import com.comvaca.dagger2x.dagger.NetModule;
+import com.comvaca.dagger2x.dagger.components.DaggerNetComponent;
+import com.comvaca.dagger2x.dagger.components.NetComponent;
+import com.comvaca.dagger2x.dagger.modules.AppModule;
+import com.comvaca.dagger2x.dagger.modules.NetModule;
+
 
 public class MyApplication extends Application {
 
