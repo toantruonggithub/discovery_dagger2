@@ -26,7 +26,7 @@ public class BaseActivity extends AppCompatActivity {
   public static final MediaType JSON
       = MediaType.parse("application/json; charset=utf-8");
 
-  @Inject
+  @Inject @Named("cached")
   OkHttpClient mOkHttpClient1;
 
   @Inject

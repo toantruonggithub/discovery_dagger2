@@ -10,6 +10,7 @@ import com.google.gson.GsonBuilder;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -48,7 +49,7 @@ public class NetModule {
     return gsonBuilder.create();
   }
 
-  @Provides
+  @Provides @Named("cached")
   @Singleton
   OkHttpClient providesCachedOkHttpClient(Cache cache) {
     OkHttpClient client = new OkHttpClient();
@@ -56,16 +57,16 @@ public class NetModule {
     return client;
   }
 
-//  @Provides @Named("non-cached")
-//  @Singleton
-//  OkHttpClient providesNonCachedOkHttpClient() {
-//    OkHttpClient client = new OkHttpClient();
-//    return client;
-//  }
+  @Provides @Named("non-cached")
+  @Singleton
+  OkHttpClient providesNonCachedOkHttpClient() {
+    OkHttpClient client = new OkHttpClient();
+    return client;
+  }
 
   @Provides
   @Singleton
-  Retrofit providesRetrofit(Gson gson, OkHttpClient client) {
+  Retrofit providesRetrofit(Gson gson, @Named("cached") OkHttpClient client) {
     Retrofit retrofit = new Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create(gson))
         .baseUrl(mBaseUrl)

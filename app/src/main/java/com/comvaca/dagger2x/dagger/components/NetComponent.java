@@ -7,6 +7,7 @@ import com.comvaca.dagger2x.dagger.modules.AppModule;
 import com.comvaca.dagger2x.dagger.modules.NetModule;
 import com.squareup.okhttp.OkHttpClient;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -16,6 +17,8 @@ import retrofit.Retrofit;
 @Component(modules = {AppModule.class, NetModule.class})
 public interface NetComponent {
   Retrofit retrofit();
+
+  @Named("cached")
   OkHttpClient okHttpClient();
   SharedPreferences sharedPreferences();
 }
